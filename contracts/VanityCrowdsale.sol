@@ -25,16 +25,16 @@ contract VanityCrowdsale is Ownable {
     uint256 public totalUsdAmount;
     uint256 public bonusMultiplier;
     
-    VanityToken public token;
+    //VanityToken public token;
     bool public finalized;
-    bool public distributed;
-    uint256 public distributedCount;
-    uint256 public distributedTokens;
+    //bool public distributed;
+    //uint256 public distributedCount;
+    //uint256 public distributedTokens;
     
     // Events
 
     event Finalized();
-    event Distributed();
+    //event Distributed();
     
     // Constructor and accessors
 
@@ -47,8 +47,8 @@ contract VanityCrowdsale is Ownable {
         startTime = _startTime;
         endTime = _endTime;
         ownerWallet = _ownerWallet;
-        token = new VanityToken();
-        token.pause();
+        //token = new VanityToken();
+        //token.pause();
     }
 
     function registered(address wallet) public constant returns(bool) {
@@ -141,27 +141,27 @@ contract VanityCrowdsale is Ownable {
         return bonus.mul(bonusMultiplier);
     }
 
-    function distribute(uint count) public onlyOwner {
-        require(finalized && !distributed);
-        require(count > 0 && distributedCount + count <= participants.length);
+    // function distribute(uint count) public onlyOwner {
+    //     require(finalized && !distributed);
+    //     require(count > 0 && distributedCount + count <= participants.length);
         
-        for (uint i = 0; i < count; i++) {
-            address participant = participants[distributedCount + i];
-            uint256 bonus = participantBonus(participant);
-            uint256 tokens = participant.balance.mul(TOKEN_RATE).mul(100 + bonus).div(100);
-            token.mint(participant, tokens);
-            distributedTokens += tokens;
-        }
-        distributedCount += count;
+    //     for (uint i = 0; i < count; i++) {
+    //         address participant = participants[distributedCount + i];
+    //         uint256 bonus = participantBonus(participant);
+    //         uint256 tokens = participant.balance.mul(TOKEN_RATE).mul(100 + bonus).div(100);
+    //         token.mint(participant, tokens);
+    //         distributedTokens += tokens;
+    //     }
+    //     distributedCount += count;
 
-        if (distributedCount == participants.length) {
-            uint256 ownerTokens = distributedTokens.mul(OWNER_TOKENS_PERCENT).div(100);
-            token.mint(ownerWallet, ownerTokens);
-            token.finishMinting();
-            token.unpause();
-            distributed = true;
-            Distributed();
-        }
-    }
+    //     if (distributedCount == participants.length) {
+    //         uint256 ownerTokens = distributedTokens.mul(OWNER_TOKENS_PERCENT).div(100);
+    //         token.mint(ownerWallet, ownerTokens);
+    //         token.finishMinting();
+    //         token.unpause();
+    //         distributed = true;
+    //         Distributed();
+    //     }
+    // }
 
 }
