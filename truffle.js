@@ -12,7 +12,7 @@ module.exports = {
         testrpc: ProviderTestRpc.getNetwork(),
         development: {
             host: "localhost",
-            port: 8545,
+            port: 9545,
             network_id: "*",
             gas: 6000000
         },
